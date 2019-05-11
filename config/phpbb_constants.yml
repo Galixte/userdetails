@@ -1,0 +1,211 @@
+parameters:
+    constants:
+        # phpbb version
+        phpbb_version: '3.2.5'
+
+        # qa-related
+        # phpbb_qa: 1
+
+        # user related
+        anonymous: 1
+
+        user_activation_none: 0
+        user_activation_self: 1
+        user_activation_admin: 2
+        user_activation_disable: 3
+
+        avatar_upload: 1
+        avatar_remote: 2
+        avatar_gallery: 3
+
+        user_normal: 0
+        user_inactive: 1
+        user_ignore: 2
+        user_founder: 3
+
+        inactive_register: 1 # newly registered account
+        inactive_profile: 2 # profile details changed
+        inactive_manual: 3 # account deactivated by administrator
+        inactive_remind: 4 # forced user account reactivation
+
+        # acl
+        acl_never: 0
+        acl_yes: 1
+        acl_no: -1
+
+        # login error codes
+        login_continue: 1
+        login_break: 2
+        login_success: 3
+        login_success_create_profile: 20
+        login_success_link_profile: 21
+        login_error_username: 10
+        login_error_password: 11
+        login_error_active: 12
+        login_error_attempts: 13
+        login_error_external_auth: 14
+        login_error_password_convert: 15
+
+        # maximum login attempts
+        # the value is arbitrary, but it has to fit into the user_login_attempts field.
+        login_attempts_max: 100
+
+        # group settings
+        group_open: 0
+        group_closed: 1
+        group_hidden: 2
+        group_special: 3
+        group_free: 4
+
+        # forum/topic states
+        forum_cat: 0
+        forum_post: 1
+        forum_link: 2
+        item_unlocked: 0
+        item_locked: 1
+        item_moved: 2
+
+        item_unapproved: 0 # => has not yet been approved
+        item_approved: 1 # => has been approved, and has not been soft deleted
+        item_deleted: 2 # => has been soft deleted
+        item_reapprove: 3 # => has been edited and needs to be re-approved
+
+        # forum flags
+        forum_flag_link_track: 1
+        forum_flag_prune_poll: 2
+        forum_flag_prune_announce: 4
+        forum_flag_prune_sticky: 8
+        forum_flag_active_topics: 16
+        forum_flag_post_review: 32
+        forum_flag_quick_reply: 64
+
+        # forum options... sequential order. modifications should begin at number 10 (number 29 is maximum)
+        forum_option_feed_news: 1
+        forum_option_feed_exclude: 2
+
+        # optional text flags
+        option_flag_bbcode: 1
+        option_flag_smilies: 2
+        option_flag_links: 4
+
+        # topic types
+        post_normal: 0
+        post_sticky: 1
+        post_announce: 2
+        post_global: 3
+
+        # lastread types
+        track_normal: 0
+        track_posted: 1
+
+        # notify methods
+        notify_email: 0
+        notify_im: 1
+        notify_both: 2
+
+        # notify status
+        notify_yes: 0
+        notify_no: 1
+
+        # email priority settings
+        mail_low_priority: 4
+        mail_normal_priority: 3
+        mail_high_priority: 2
+
+        # log types
+        log_admin: 0
+        log_mod: 1
+        log_critical: 2
+        log_users: 3
+
+        # private messaging - do not change these values
+        privmsgs_hold_box: -4
+        privmsgs_no_box: -3
+        privmsgs_outbox: -2
+        privmsgs_sentbox: -1
+        privmsgs_inbox: 0
+
+        # full folder actions
+        full_folder_none: -3
+        full_folder_delete: -2
+        full_folder_hold: -1
+
+        # download modes - attachments
+        inline_link: 1
+        # this mode is only used internally to allow modders extending the attachment functionality
+        physical_link: 2
+
+        # confirm types
+        confirm_reg: 1
+        confirm_login: 2
+        confirm_post: 3
+        confirm_report: 4
+
+        # categories - attachments
+        attachment_category_none: 0
+        attachment_category_image: 1 # inline images
+        attachment_category_wm: 2 # windows media files - streaming - @deprecated 3.2
+        attachment_category_rm: 3 # real media files - streaming - @deprecated 3.2
+        attachment_category_thumb: 4 # not used within the database, only while displaying posts
+        attachment_category_flash: 5 # flash/swf files
+        attachment_category_quicktime: 6 # quicktime/mov files - @deprecated 3.2
+
+        # bbcode uid length
+        bbcode_uid_len: 8
+
+        # number of core bbcodes
+        num_core_bbcodes: 12
+        num_predefined_bbcodes: 22
+
+        # bbcode ids
+        bbcode_id_quote: 0
+        bbcode_id_b: 1
+        bbcode_id_i: 2
+        bbcode_id_url: 3
+        bbcode_id_img: 4
+        bbcode_id_size: 5
+        bbcode_id_color: 6
+        bbcode_id_u: 7
+        bbcode_id_code: 8
+        bbcode_id_list: 9
+        bbcode_id_email: 10
+        bbcode_id_flash: 11
+        bbcode_id_attach: 12
+
+        # bbcode hard limit
+        bbcode_limit: 1511
+
+        # smiley hard limit
+        smiley_limit: 1000
+
+        # magic url types
+        magic_url_email: 1
+        magic_url_full: 2
+        magic_url_local: 3
+        magic_url_www: 4
+
+        # profile field types
+        field_int: 1
+        field_string: 2
+        field_text: 3
+        field_bool: 4
+        field_dropdown: 5
+        field_date: 6
+
+        # referer validation
+        referer_validate_none: 0
+        referer_validate_host: 1
+        referer_validate_path: 2
+
+        # phpbb_chmod() permissions
+        @chmod_all: 7
+        @chmod_read: 4
+        @chmod_write: 2
+        @chmod_execute: 1
+
+        # captcha code length
+        captcha_min_chars: 4
+        captcha_max_chars: 7
+
+        # additional constants
+        vote_converted: 127
