@@ -305,7 +305,7 @@ class data_controller implements data_interface
 		// Get default style name (we may need this later)
 		$sql = 'SELECT style_name
 			FROM ' . $this->tables['styles'] . '
-			WHERE style_id = ' . $this->config['default_style'];
+			WHERE style_id = ' . (int) $this->config['default_style'];
 
 		$result 		= $this->db->sql_query($sql);
 		$default_style	= $this->db->sql_fetchfield('style_name');
@@ -332,7 +332,7 @@ class data_controller implements data_interface
 					'ON'	=> 'u.user_id = pf.user_id',
 				),
 			),
-			'WHERE' => 'u.user_type <> ' . $this->constants['user_ignore'] .
+			'WHERE' => 'u.user_type <> ' . (int) $this->constants['user_ignore'] .
 				$filter_by,
 			'ORDER_BY' => $order_by,
 		));
@@ -444,7 +444,7 @@ class data_controller implements data_interface
 							'ON'	=> 'u.user_id = pfd.user_id',
 						),
 					),
-					'WHERE' => "u.user_id = '" . $row['user_id'] . "'",
+					'WHERE' => "u.user_id = '" . (int) $row['user_id'] . "'",
 				));
 
 				$result 	= $this->db->sql_query($sql);
@@ -584,7 +584,7 @@ class data_controller implements data_interface
 			WHERE pf.field_id  = pl.field_id
 				AND pl.lang_id = l.lang_id
 				AND pf.field_active = 1
-				AND l.lang_iso = '" . $this->user->data['user_lang'] . "'";
+				AND l.lang_iso = '" . (int) $this->user->data['user_lang'] . "'";
 
 		$result	= $this->db->sql_query($sql);
 
