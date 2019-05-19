@@ -4,7 +4,9 @@ This extension adds the facility to produce a listinf, either on screen or in CS
 
 [![Build Status](https://travis-ci.com/david63/userdetails.svg?branch=master)](https://travis-ci.com/david63/userdetails)
 [![License](https://poser.pugx.org/david63/userdetails/license)](https://packagist.org/packages/david63/userdetails)
-[![Latest Stable Version](https://poser.pugx.org/david63/userdetails/v/stable)](https://packagist.org/packages/david63/userdetails)[![Latest Unstable Version](https://poser.pugx.org/david63/userdetails/v/unstable)](https://packagist.org/packages/david63/userdetails)[![Total Downloads](https://poser.pugx.org/david63/userdetails/downloads)](https://packagist.org/packages/david63/userdetails)
+[![Latest Stable Version](https://poser.pugx.org/david63/userdetails/v/stable)](https://packagist.org/packages/david63/userdetails)
+[![Latest Unstable Version](https://poser.pugx.org/david63/userdetails/v/unstable)](https://packagist.org/packages/david63/userdetails)
+[![Total Downloads](https://poser.pugx.org/david63/userdetails/downloads)](https://packagist.org/packages/david63/userdetails)
 
 ## Minimum Requirements
 * phpBB 3.2.0
