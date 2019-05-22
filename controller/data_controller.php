@@ -354,7 +354,7 @@ class data_controller implements data_interface
 		$this->db->sql_freeresult($result);
 
 		// Check that we have some data to output
-		if(empty($user_data))
+		if (empty($user_data))
 		{
 			trigger_error($this->language->lang('NO_DATA') . adm_back_link($this->u_action));
 		}
@@ -452,7 +452,7 @@ class data_controller implements data_interface
 
 				$this->db->sql_freeresult($result);
 
-				foreach($pf_data as $key => $data)
+				foreach ($pf_data as $key => $data)
 				{
 					// Only process the items that we need
 					if ($data && $key != 'user_id')
@@ -479,7 +479,7 @@ class data_controller implements data_interface
 						if ($data['id'] == $rows)
 						{
 							$output_data .= '<div class="table-body-cell">' . $user_vars[$data['id']] . '</div>';
-						
+
 							if ($mode == 'csv')
 							{
 								$csv_data .= '"' . $user_vars[$data['id']] . '",';
