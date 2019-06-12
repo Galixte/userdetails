@@ -19,7 +19,7 @@ use phpbb\user;
 use phpbb\group\helper;
 use phpbb\language\language;
 use phpbb\di\service_collection;
-use david63\userdetails\ext;
+use david63\userdetails\core\functions;
 
 /**
 * Data controller
@@ -56,6 +56,9 @@ class data_controller implements data_interface
 	/** @var \phpbb\di\service_collection */
 	protected $type_collection;
 
+	/** @var \david63\userdetails\core\functions */
+	protected $functions;
+
 	/** @var string custom select_ary */
 	protected $select_ary;
 
@@ -77,26 +80,27 @@ class data_controller implements data_interface
 	/**
 	 * Constructor for data controller
 	 *
-	 * @param \phpbb\config\config              $config             	Config object
-	 * @param \phpbb\config\db_text             $config_text        	Config text object
-	 * @param \phpbb\db\driver\driver_interface $db                 	Db object
-	 * @param \phpbb\request\request            $request            	Request object
-	 * @param \phpbb\template\template          $template           	Template object
-	 * @param \phpbb\pagination                 $pagination         	Pagination object
-	 * @param \phpbb\user                       $user               	User object
-	 * @param \phpbb\group\helper               $group_helper       	Group helper object
-	 * @param \phpbb\language\language          $language           	Language object
-	 * @param \phpbb\di\service_collection 		$type_collection		CPF data
-	 * @param array	                            $select_ary             Custom select data
-	 * @param string							$phpbb_root_path    	phpBB root path
-	 * @param string							$php_ext            	phpBB extension
-	 * @param array	                            $tables					phpBB db tables
-	 * @param array	                            $constants				phpBB constants
+	 * @param \phpbb\config\config              	$config             Config object
+	 * @param \phpbb\config\db_text             	$config_text        Config text object
+	 * @param \phpbb\db\driver\driver_interface 	$db                 Db object
+	 * @param \phpbb\request\request            	$request            Request object
+	 * @param \phpbb\template\template          	$template           Template object
+	 * @param \phpbb\pagination                 	$pagination         Pagination object
+	 * @param \phpbb\user                       	$user               User object
+	 * @param \phpbb\group\helper               	$group_helper       Group helper object
+	 * @param \phpbb\language\language          	$language           Language object
+	 * @param \phpbb\di\service_collection 			$type_collection	CPF data
+	 * @param \david63\userdetails\core\functions	functions			Functions for the extension
+	 * @param array	                            	$select_ary			Custom select data
+	 * @param string								$phpbb_root_path    phpBB root path
+	 * @param string								$php_ext            phpBB extension
+	 * @param array	                            	$tables				phpBB db tables
+	 * @param array	                            	$constants			phpBB constants
 	 *
 	 * @return \david63\userdetails\controller\data_controller
 	 * @access public
 	 */
-	public function __construct(config $config, db_text $config_text, driver_interface $db, request $request, template $template, pagination $pagination, user $user, helper $group_helper, language $language, service_collection $type_collection, $select_ary, $phpbb_root_path, $php_ext, $tables, $constants)
+	public function __construct(config $config, db_text $config_text, driver_interface $db, request $request, template $template, pagination $pagination, user $user, helper $group_helper, language $language, service_collection $type_collection, functions $functions, $select_ary, $phpbb_root_path, $php_ext, $tables, $constants)
 	{
 		$this->config			= $config;
 		$this->config_text 		= $config_text;
@@ -108,6 +112,7 @@ class data_controller implements data_interface
 		$this->group_helper		= $group_helper;
 		$this->language			= $language;
 		$this->type_collection 	= $type_collection;
+		$this->functions		= $functions;
 		$this->select_ary		= $select_ary;
 		$this->phpbb_root_path	= $phpbb_root_path;
 		$this->php_ext			= $php_ext;
@@ -128,6 +133,8 @@ class data_controller implements data_interface
 
 		// Create a form key for preventing CSRF attacks
 		add_form_key($this->constants['form_key']);
+
+		$back = false;
 
 		// Unset the save flag
 		$this->config->set('user_details_save_flag', false, false);
@@ -158,12 +165,14 @@ class data_controller implements data_interface
 		// Template vars for header panel
 		$this->template->assign_vars(array(
 			'HEAD_TITLE'		=> $this->language->lang('ACP_USER_DETAILS'),
-			'HEAD_DESCRIPTION'	=> $this->language->lang('USER_DETAILS_SELECT'),
+			'HEAD_DESCRIPTION'	=> $this->language->lang('ACP_USER_DETAILS_CONFIG'),
 
-			'S_ERROR'			=> false,
-			'S_BACK'			=> false,
+			'NAMESPACE'			=> $this->functions->get_ext_namespace('twig'),
 
-			'VERSION_NUMBER'	=> ext::USER_DETAILS_VERSION,
+			'S_BACK'			=> $back,
+			'S_VERSION_CHECK'	=> $this->functions->version_check(),
+
+			'VERSION_NUMBER'	=> $this->functions->get_this_version(),
 		));
 	}
 
@@ -188,7 +197,7 @@ class data_controller implements data_interface
 		$display_ary	= $this->request->variable('mark', array(''));
 
 		$display_ary	= ($display_ary) ? $display_ary : json_decode(str_replace("'", '"', $disp_ary));
-		$error		 	= false;
+		$error = $back 	= false;
 
 		// Is the submitted form is valid - we do not want to check after the first time it is displayed
 		if ($mode == 'display' && !check_form_key($this->constants['form_key']) && $start === 0)
@@ -399,7 +408,7 @@ class data_controller implements data_interface
 					'user_avatar'			=> phpbb_get_user_avatar($row),
 					'user_avatar_type'		=> ($row['user_avatar_type'] != '') ? $this->language->lang(['avatar_type', $row['user_avatar_type']]) : '',
 					'user_birthday'			=> $this->get_birthday($row['user_birthday']),
-					'user_dateformat'		=> date($row['user_dateformat'], time()),
+					'user_dateformat'		=> $this->user->format_date(time(), $row['user_dateformat']),
 					'user_email'			=> $row['user_email'],
 					'user_emailtime'		=> ($row['user_emailtime'] != 0) ? $this->user->format_date($row['user_emailtime']) : '',
 					'user_id'				=> $this->language->lang('HASH') . $row['user_id'],
@@ -528,10 +537,13 @@ class data_controller implements data_interface
 					'HEAD_TITLE'		=> $this->language->lang('ACP_USER_DETAILS'),
 					'HEAD_DESCRIPTION'	=> $this->language->lang('USER_DETAILS_DISPLAY'),
 
-					'S_BACK'			=> false,
-					'S_ERROR'			=> $error,
+					'NAMESPACE'			=> $this->functions->get_ext_namespace('twig'),
 
-					'VERSION_NUMBER'	=> ext::USER_DETAILS_VERSION,
+					'S_BACK'			=> $back,
+					'S_ERROR'			=> $error,
+					'S_VERSION_CHECK'	=> $this->functions->version_check(),
+
+					'VERSION_NUMBER'	=> $this->functions->get_this_version(),
 				));
 
 				$this->template->assign_vars(array(

@@ -50,6 +50,8 @@ $lang = array_merge($lang, array(
 
 	'HASH'						=> '#',
 
+	'NEW_VERSION'				=> 'New Version',
+	'NEW_VERSION_EXPLAIN'		=> 'There is a newer version of this extension available.',
 	'NO_ATTRIBUTES_SELECTED'	=> 'No attributes selected',
 	'NO_DATA'					=> 'The request has not created any data to output',
 	'NO_GROUP'					=> '<strong>** No group **</strong>',

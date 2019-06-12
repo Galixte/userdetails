@@ -1,5 +1,4 @@
-{% include 'overall_header.html' %}
-{% include '@david63_userdetails/head_panel.html' %}
+{% include '@' ~ NAMESPACE ~ '/head_panel.html' %}
 
 <form id="userdetails" method="post" action="{{ U_ACTION }}">
 
@@ -19,9 +18,9 @@
 			<input class="adm-button" type="submit" value="{{ lang('UD_GO') }}" name="sort" />
 			&nbsp;&nbsp;&nbsp;
 			<input class="adm-button" type="submit" value="{{ lang('CLEAR_FILTER') }}" name="clear_filters" />
-			<br /><br />
+			<br><br>
 			<strong>&nbsp;&nbsp;{{ lang('SORT_BY') }}&nbsp;{{ lang('COLON') }}</strong>&nbsp;&nbsp;{{ S_SORT_KEY }}&nbsp;&nbsp;&nbsp;{{ S_SORT_DIR }}
-			<br />
+			<br>
 			<strong>{{ lang('FILTER_BY') }}&nbsp;{{ lang('COLON') }}</strong>&nbsp;&nbsp;{{ S_FILTER_BY }}&nbsp;&nbsp;&nbsp;{{ S_FILTER_CHAR }}
 		</div>
 	</div>

@@ -1,6 +1,3 @@
-imports:
-    - { resource: phpbb_constants.yml }
-
 parameters:
     constants:
         form_key: 'userdetails'

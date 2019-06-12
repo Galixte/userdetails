@@ -13,8 +13,6 @@ use phpbb\extension\base;
 
 class ext extends base
 {
-	const USER_DETAILS_VERSION = '2.1.1 RC1';
-
 	/**
 	* Enable extension if phpBB version requirement is met
 	*
