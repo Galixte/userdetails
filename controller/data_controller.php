@@ -128,8 +128,8 @@ class data_controller implements data_interface
 	*/
 	public function select_output()
 	{
-		$this->language->add_lang('userdetails', 'david63/userdetails');
-		$this->language->add_lang('userdetails_explain', 'david63/userdetails');
+		$this->language->add_lang('userdetails', $this->functions->get_ext_namespace());
+		$this->language->add_lang('userdetails_explain', $this->functions->get_ext_namespace());
 
 		// Create a form key for preventing CSRF attacks
 		add_form_key($this->constants['form_key']);
