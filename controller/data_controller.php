@@ -542,7 +542,7 @@ class data_controller implements data_interface
 				$this->template->assign_vars(array(
 					'DOWNLOAD'			=> (array_key_exists('download', $version_data)) ? '<a href =' . $version_data['download'] . '>' . $this->language->lang('NEW_VERSION_LINK') . '</a>' : '',
 
- 					'ERROR_TITLE'		=> $this->language->lang('WARNING'),
+					'ERROR_TITLE'		=> $this->language->lang('WARNING'),
 					'ERROR_DESCRIPTION'	=> $this->language->lang('ERROR_EXPLAIN'),
 
 					'HEAD_TITLE'		=> $this->language->lang('ACP_USER_DETAILS'),
@@ -555,7 +555,7 @@ class data_controller implements data_interface
 					'S_VERSION_CHECK'	=> (array_key_exists('current', $version_data)) ? $version_data['current'] : false,
 
 					'VERSION_NUMBER'	=> $this->functions->get_meta('version'),
-	   			));
+				));
 
 				$this->template->assign_vars(array(
 					'HEADINGS'		=> $headings,
