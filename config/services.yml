@@ -1,5 +1,5 @@
 imports:
-    - { resource: userdetails_constants.yml }
+    - { resource: imports.yml }
     - { resource: arraydata.yml }
 
 services:

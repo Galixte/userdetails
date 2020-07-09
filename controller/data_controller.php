@@ -71,7 +71,7 @@ class data_controller implements data_interface
 	/** @var string Custom form action */
 	protected $u_action;
 
-	/** @var string phpBB tables */
+	/** @var string custom tables */
 	protected $tables;
 
 	/** @var string custom constants */
@@ -128,9 +128,7 @@ class data_controller implements data_interface
 	*/
 	public function select_output()
 	{
-		// Load the language files
-		$this->language->add_lang('acp_common', $this->functions->get_ext_namespace());
-		$this->language->add_lang('acp_userdetails', $this->functions->get_ext_namespace());
+		$this->language->add_lang('userdetails', $this->functions->get_ext_namespace());
 		$this->language->add_lang('userdetails_explain', $this->functions->get_ext_namespace());
 
 		// Create a form key for preventing CSRF attacks
@@ -165,20 +163,16 @@ class data_controller implements data_interface
 		}
 
 		// Template vars for header panel
-		$version_data	= $this->functions->version_check();
-
 		$this->template->assign_vars(array(
-			'DOWNLOAD'			=> (array_key_exists('download', $version_data)) ? '<a href =' . $version_data['download'] . '>' . $this->language->lang('NEW_VERSION_LINK') . '</a>' : '',
-
 			'HEAD_TITLE'		=> $this->language->lang('ACP_USER_DETAILS'),
 			'HEAD_DESCRIPTION'	=> $this->language->lang('ACP_USER_DETAILS_CONFIG'),
 
 			'NAMESPACE'			=> $this->functions->get_ext_namespace('twig'),
 
 			'S_BACK'			=> $back,
-			'S_VERSION_CHECK'	=> (array_key_exists('current', $version_data)) ? $version_data['current'] : false,
+			'S_VERSION_CHECK'	=> $this->functions->version_check(),
 
-			'VERSION_NUMBER'	=> $this->functions->get_meta('version'),
+			'VERSION_NUMBER'	=> $this->functions->get_this_version(),
 		));
 	}
 
@@ -191,8 +185,7 @@ class data_controller implements data_interface
 	 */
 	public function display_output($mode)
 	{
-		// Load the language files
-		$this->language->add_lang('acp_userdetails', 'david63/userdetails');
+		$this->language->add_lang('userdetails', 'david63/userdetails');
 
 		// Start initial var setup
 		$start			= $this->request->variable('start', '');
@@ -537,11 +530,7 @@ class data_controller implements data_interface
 				$this->pagination->generate_template_pagination($action . '&amp;page=page', 'pagination', 'start', $user_count, $this->config['topics_per_page'], $start);
 
 				// Template vars for header panel
-				$version_data	= $this->functions->version_check();
-
 				$this->template->assign_vars(array(
-					'DOWNLOAD'			=> (array_key_exists('download', $version_data)) ? '<a href =' . $version_data['download'] . '>' . $this->language->lang('NEW_VERSION_LINK') . '</a>' : '',
-
 					'ERROR_TITLE'		=> $this->language->lang('WARNING'),
 					'ERROR_DESCRIPTION'	=> $this->language->lang('ERROR_EXPLAIN'),
 
@@ -552,9 +541,9 @@ class data_controller implements data_interface
 
 					'S_BACK'			=> $back,
 					'S_ERROR'			=> $error,
-					'S_VERSION_CHECK'	=> (array_key_exists('current', $version_data)) ? $version_data['current'] : false,
+					'S_VERSION_CHECK'	=> $this->functions->version_check(),
 
-					'VERSION_NUMBER'	=> $this->functions->get_meta('version'),
+					'VERSION_NUMBER'	=> $this->functions->get_this_version(),
 				));
 
 				$this->template->assign_vars(array(
@@ -603,7 +592,7 @@ class data_controller implements data_interface
 	public function get_cpf_data()
 	{
 		$sql = 'SELECT pf.field_name, pl.lang_name, pl.lang_explain
-			FROM ' . $this->tables['profile_fields'] . ' pf, ' . $this->tables['profile_fields_language'] . ' pl, ' . $this->tables['lang'] . " l
+			FROM ' . $this->tables['profile_fields'] . ' pf, ' . $this->tables['profile_lang'] . ' pl, ' . $this->tables['lang'] . " l
 			WHERE pf.field_id  = pl.field_id
 				AND pl.lang_id = l.lang_id
 				AND pf.field_active = 1
@@ -651,7 +640,7 @@ class data_controller implements data_interface
 			),
 			'LEFT_JOIN'	=> array(
 				array(
-					'FROM'	=> array($this->tables['profile_fields_options_language']	=> ' pfl',),
+					'FROM'	=> array($this->tables['profile_fields_lang']	=> ' pfl',),
 					'ON'	=> 'pf.field_id = pfl.field_id',
 				),
 			),

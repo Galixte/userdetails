@@ -1,15 +1,17 @@
 <?php
 /**
-*
-* @package User Details Extension
-* @copyright (c) 2016 david63
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * User details. An extension for the phpBB Forum Software package.
+ * French translation by Pyanepsion (https://corrigeur.fr) & Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 david63
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -20,7 +22,7 @@ if (empty($lang) || !is_array($lang))
 	$lang = array();
 }
 
-/// DEVELOPERS PLEASE NOTE
+// DEVELOPERS PLEASE NOTE
 //
 // All language files should use UTF-8 as their encoding and the files must not contain a BOM.
 //
@@ -33,19 +35,12 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
-$lang = array_merge($lang, [
-	'EXT_ENABLE_ERROR' => 'This extension requires phpBB 3.2.0 (or greater).',
-]);
-
-/**
-* Translators ignore this.
-*
-* Overwrite core error message keys with a more specific message.
-*/
 $lang = array_merge($lang, array(
-	'EXTENSION_NOT_ENABLEABLE' 		=> isset($lang['EXTENSION_NOT_ENABLEABLE']) ? $lang['EXTENSION_NOT_ENABLEABLE'] . '<br><br><strong>' . $lang['EXT_ENABLE_ERROR'] . '</strong>' : null,
-	'CLI_EXTENSION_ENABLE_FAILURE' 	=> isset($lang['CLI_EXTENSION_ENABLE_FAILURE']) ? $lang['CLI_EXTENSION_ENABLE_FAILURE'] . ' : ' . $lang['EXT_ENABLE_ERROR'] : null,
+	'ACP_USER_DETAILS'				=> 'Informations des utilisateurs',
+	'ACP_USER_UTILS'				=> 'Outils utilisateur',
+	'ACP_USER_DETAILS_CONFIG'		=> 'Configuration',
+	'USER_DETAILS_MANAGE'			=> 'Gestion des informations sur les utilisateurs',
 ));

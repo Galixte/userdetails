@@ -10,7 +10,6 @@
 namespace david63\userdetails\core;
 
 use phpbb\extension\manager;
-use phpbb\exception\version_check_exception;
 
 /**
 * functions
@@ -68,56 +67,23 @@ class functions
 	*/
 	public function version_check()
 	{
-		if ($this->get_meta('host') == 'www.phpbb.com')
-		{
-			$port 	= 'https://';
-			$stable	= null;
-		}
-		else
-		{
-			$port 	= 'http://';
-			$stable = 'unstable';
-		}
+		$md_manager 	= $this->ext_manager->create_extension_metadata_manager($this->get_ext_namespace());
+		$versions 		= $this->ext_manager->version_check($md_manager, true);
+		$new_version	= (array_key_exists('current', $versions) ? $versions['current'] : false);
 
-		// Can we access the version srver?
-		if (@fopen($port . $this->get_meta('host') . $this->get_meta('directory') . '/' . $this->get_meta('filename'), 'r'))
-		{
-			try
-			{
-				$md_manager 	= $this->ext_manager->create_extension_metadata_manager($this->get_ext_namespace());
-				$version_data	= $this->ext_manager->version_check($md_manager, true, false, $stable);
-			}
-			catch (version_check_exception $e)
-			{
-				$version_data['current'] = 'fail';
-			}
-		}
-		else
-		{
-			$version_data['current'] = 'fail';
-		}
-
-		return $version_data;
+		return $new_version;
 	}
 
 	/**
-	* Get a meta_data key value
+	* Get the version number of this extension
 	*
 	* @return $meta_data
 	* @access public
 	*/
-	public function get_meta($data)
+	public function get_this_version()
 	{
-		$meta_data	= '';
 		$md_manager = $this->ext_manager->create_extension_metadata_manager($this->get_ext_namespace());
-
-		foreach (new \RecursiveIteratorIterator(new \RecursiveArrayIterator($md_manager->get_metadata('all'))) as $key => $value)
-		{
-			if ($data === $key)
-			{
-				$meta_data = $value;
-			}
-		}
+		$meta_data	= $md_manager->get_metadata('version');
 
 		return $meta_data;
 	}
